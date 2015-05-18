@@ -4,7 +4,6 @@ function Broadcast(handler) {
 	var socket = io.connect('http://www.dangsam.com:8080');
 	var that = this;
 	socket.on('toclient',function(data){
-		console.log(data.msg);
 		that.handler(data.msg);		
 	});
 	

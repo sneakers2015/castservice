@@ -1,0 +1,53 @@
+<html>
+<head>
+ 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no" />
+
+    <title></title>
+    <script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
+    <script src="http://www.dangsam.com:8080/socket.io/socket.io.js"></script>
+	<script src="http://www.dangsam.com/cast/cast.js"></script>
+ 
+ <style>
+	.number {
+		width: 300px;
+		height: 50px;
+	}
+ </style>
+</head>
+<body>
+	<button class="number">1</button></br>
+	<button class="number">2</button></br>
+	<button class="number">3</button></br>
+	<button class="number">4</button></br>
+	<button class="number">5</button></br>
+    <b>Send message</b><p>
+    Message  <input type="text" id="msgbox"/>
+    <br>
+    <span id="msgs"></span>
+ 
+    <script type="text/javascript">
+		var cast = new Broadcast(function(msg) {
+            console.log(msg);
+            $('#msgs').prepend('<BR>' + (new Date()).toLocaleTimeString() + '> ' + msg);
+		});
+		
+		$("#msgbox").keyup(function(event) {
+            if (event.which == 13) {
+                cast.send($('#msgbox').val());
+                $('#msgbox').val('');
+            }
+        });
+		/*
+        socket.on('toclient',function(data){
+            console.log(data.msg);
+            $('#msgs').prepend('<BR>' + (new Date()).toLocaleTimeString() + '> ' + data.msg);
+        });
+		*/
+		$('.number').bind('mousedown', function () {
+			cast.send($(this).text());
+		});
+		
+    </script>
+</body>
+</html>
